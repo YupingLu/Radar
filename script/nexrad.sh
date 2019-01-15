@@ -4,15 +4,15 @@
 # Author: Yuping Lu
 # Date: 01/14/2019
 
-search_dir='/Users/ylk/Downloads/nexrad/HAS011208157'
+search_dir='/lustre/or-hydra/cades-arm/yupinglu/HAS011208157'
 
-N0R_dir='/Users/ylk/Downloads/nexrad/processed/N0R'
-N0X_dir='/Users/ylk/Downloads/nexrad/processed/N0X'
-N0C_dir='/Users/ylk/Downloads/nexrad/processed/N0C'
-N0K_dir='/Users/ylk/Downloads/nexrad/processed/N0K'
-N0H_dir='/Users/ylk/Downloads/nexrad/processed/N0H'
+N0R_dir='/lustre/or-hydra/cades-arm/yupinglu/processed/N0R'
+N0X_dir='/lustre/or-hydra/cades-arm/yupinglu/processed/N0X'
+N0C_dir='/lustre/or-hydra/cades-arm/yupinglu/processed/N0C'
+N0K_dir='/lustre/or-hydra/cades-arm/yupinglu/processed/N0K'
+N0H_dir='/lustre/or-hydra/cades-arm/yupinglu/processed/N0H'
 
-target_dir='/Users/ylk/Downloads/nexrad/processed/final'
+target_dir='/lustre/or-hydra/cades-arm/yupinglu/processed/final'
 
 # remove files in target dir and clear n0r.txt n0x.txt n0c.txt n0k.txt n0h.txt
 `rm "${target_dir}"/*`
