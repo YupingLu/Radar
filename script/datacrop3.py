@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # Crop raw data to create 12*6 30*30 matrices.
 # Missing values are filled by mean values.
-# radar_echo_classification 0, 10, 20, 140, 150 are excluded.
+# radar_echo_classification, only 30, 40, 60 and 80 used
 # Author: Yuping Lu <yupinglu89@gmail.com>
-# Date: 01/15/2019
+# Date: 01/29/2019
 
 # load libs
 import pyart
@@ -49,8 +49,8 @@ f_n0x = open("name2/n0x.txt","w")
 
 # Loop the files
 for i in range(len(df_n0h.index)):
-    #if i == 2:
-    #    break
+    if i == 2:
+        break
     # Read each variable file
     try:
         N0H = pyart.io.read('data/'+df_n0h.iloc[i,0])
@@ -107,7 +107,18 @@ for i in range(len(df_n0h.index)):
         continue
         
     # Extend n0r
+    # Expand by 5 times
     data_n0r_repeat = np.repeat(data_n0r, 5, axis=1)
+    # Insert another 1 every 23
+    tres = np.empty((360, 0))
+    for i in range(1150):
+        if i % 23 == 0:
+            tres = np.append(tres, data_n0r_repeat[:,i-1].reshape(360,1), axis=1)
+        tres = np.append(tres, data_n0r_repeat[:,i].reshape(360,1), axis=1)
+    if tres.shape != (360, 1200):
+        f_error.write('Error dim: ' + df_n0r.iloc[i,0] + '\n')
+        continue
+    data_n0r = tres
     
     # Crop the file into 18 60*60 matrices
     for j in range(len(idx)):
@@ -115,24 +126,30 @@ for i in range(len(df_n0h.index)):
             r1 = idx[j]
             c1 = idy[k]
             tmp_n0h = data_n0h[r1:r1+60, c1:c1+60]
-            # mask 0, 10, 20, 140, 150
+            # mask 0, 10, 20, 50, 70, 90, 100, 140, 150
             # If the valid values of n0h is less then 6, abadon that entry.
             # abadon.txt
             mx = ma.masked_values(tmp_n0h, 0.0) 
             mx = ma.masked_values(mx, 10.0) 
             mx = ma.masked_values(mx, 20.0)
+            mx = ma.masked_values(mx, 50.0)
+            mx = ma.masked_values(mx, 70.0)
+            mx = ma.masked_values(mx, 90.0)
+            mx = ma.masked_values(mx, 100.0)
             mx = ma.masked_values(mx, 140.0) 
             mx = ma.masked_values(mx, 150.0) 
             t_n0h = mx.compressed()
             unmask_size = len(t_n0h)
-            if unmask_size < 12:
+            # valid data >= 30%
+            if unmask_size < 270:
                 f_abandon.write('Too few n0h: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
             # get the most frequent radar_echo_classification
             m = mode(t_n0h)
             res = m[0][0]
-            if res < 6:
+            # valida data >= 10%
+            if res < 90:
                 f_abandon.write('Mode is small: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
@@ -142,7 +159,7 @@ for i in range(len(df_n0h.index)):
             tmp_n0c = data_n0c[r1:r1+60, c1:c1+60]
             tmp_n0k = data_n0k[r1:r1+60, c1:c1+60]
             tmp_n0x = data_n0x[r1:r1+60, c1:c1+60]
-            tmp_n0r = data_n0r_repeat[r1:r1+60, c1:c1+60]
+            tmp_n0r = data_n0r[r1:r1+60, c1:c1+60]
             
             # Replace the missing values with mean values
             t_n0c = tmp_n0c.filled(tmp_n0c.mean())
