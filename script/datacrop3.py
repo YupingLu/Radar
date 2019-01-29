@@ -140,16 +140,16 @@ for i in range(len(df_n0h.index)):
             mx = ma.masked_values(mx, 150.0) 
             t_n0h = mx.compressed()
             unmask_size = len(t_n0h)
-            # valid data >= 10%
-            if unmask_size < 90:
+            # valid data >= 20%
+            if unmask_size < 180:
                 f_abandon.write('Too few n0h: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
             # get the most frequent radar_echo_classification
             m = mode(t_n0h)
             res = m[0][0]
-            # valida data >= 5%
-            if res < 45:
+            # valida data >= 10%
+            if res < 90:
                 f_abandon.write('Mode is small: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
