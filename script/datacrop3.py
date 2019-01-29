@@ -29,8 +29,8 @@ cnt = {
 }
 
 idx = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
-#idy = [0, 30, 60, 90, 120, 150]
-idy = [0]
+idy = [0, 30, 60, 90, 120, 150]
+#idy = [0]
 
 # Read data frames
 df_n0c = pd.read_csv('name/n0c.txt', header = None)
@@ -49,35 +49,35 @@ f_n0x = open("name2/n0x.txt","w")
 
 # Loop the files
 for i in range(len(df_n0h.index)):
-    if i == 2:
-        break
+    #if i == 2:
+    #    break
     # Read each variable file
     try:
-        N0H = pyart.io.read('data/'+df_n0h.iloc[i,0])
+        N0H = pyart.io.read('final/'+df_n0h.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0h.iloc[i,0] + '\n')
         continue
         
     try:
-        N0C = pyart.io.read('data/'+df_n0c.iloc[i,0])
+        N0C = pyart.io.read('final/'+df_n0c.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0c.iloc[i,0] + '\n')
         continue
         
     try:
-        N0K = pyart.io.read('data/'+df_n0k.iloc[i,0])
+        N0K = pyart.io.read('final/'+df_n0k.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0k.iloc[i,0] + '\n')
         continue
         
     try:
-        N0R = pyart.io.read('data/'+df_n0r.iloc[i,0])
+        N0R = pyart.io.read('final/'+df_n0r.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0r.iloc[i,0] + '\n')
         continue
         
     try:
-        N0X = pyart.io.read('data/'+df_n0x.iloc[i,0])
+        N0X = pyart.io.read('final/'+df_n0x.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0x.iloc[i,0] + '\n')
         continue  
@@ -111,10 +111,10 @@ for i in range(len(df_n0h.index)):
     data_n0r_repeat = np.repeat(data_n0r, 5, axis=1)
     # Insert another 1 every 23
     tres = np.empty((360, 0))
-    for i in range(1150):
-        if i % 23 == 0:
-            tres = np.append(tres, data_n0r_repeat[:,i-1].reshape(360,1), axis=1)
-        tres = np.append(tres, data_n0r_repeat[:,i].reshape(360,1), axis=1)
+    for idk in range(1150):
+        tres = np.append(tres, data_n0r_repeat[:,idk].reshape(360,1), axis=1)
+        if (idk+1) % 23 == 0:
+            tres = np.append(tres, data_n0r_repeat[:,idk].reshape(360,1), axis=1)
     if tres.shape != (360, 1200):
         f_error.write('Error dim: ' + df_n0r.iloc[i,0] + '\n')
         continue
@@ -140,16 +140,16 @@ for i in range(len(df_n0h.index)):
             mx = ma.masked_values(mx, 150.0) 
             t_n0h = mx.compressed()
             unmask_size = len(t_n0h)
-            # valid data >= 30%
-            if unmask_size < 270:
+            # valid data >= 10%
+            if unmask_size < 90:
                 f_abandon.write('Too few n0h: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
             # get the most frequent radar_echo_classification
             m = mode(t_n0h)
             res = m[0][0]
-            # valida data >= 10%
-            if res < 90:
+            # valida data >= 5%
+            if res < 45:
                 f_abandon.write('Mode is small: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
