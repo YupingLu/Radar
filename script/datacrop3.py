@@ -24,6 +24,7 @@ cnt = {
     80 : 0, # Big Drops (rain) (BD)
     90 : 0, # Graupel (GR)
     100 : 0, # Hail, possibly with rain (HA)
+    120: 0,
     140 : 0, # Unknown Classification (UK)
     150 : 0 # Range Folded (RH)
 }
@@ -126,8 +127,8 @@ for i in range(len(df_n0h.index)):
             r1 = idx[j]
             c1 = idy[k]
             tmp_n0h = data_n0h[r1:r1+60, c1:c1+60]
-            # mask 0, 10, 20, 50, 70, 90, 100, 140, 150
-            # If the valid values of n0h is less then 6, abadon that entry.
+            # mask 0, 10, 20, 50, 70, 90, 100, 120, 140, 150
+            # If the valid values of n0h is less then 90, abadon that entry.
             # abadon.txt
             mx = ma.masked_values(tmp_n0h, 0.0) 
             mx = ma.masked_values(mx, 10.0) 
@@ -136,6 +137,7 @@ for i in range(len(df_n0h.index)):
             mx = ma.masked_values(mx, 70.0)
             mx = ma.masked_values(mx, 90.0)
             mx = ma.masked_values(mx, 100.0)
+            mx = ma.masked_values(mx, 120.0)
             mx = ma.masked_values(mx, 140.0) 
             mx = ma.masked_values(mx, 150.0) 
             t_n0h = mx.compressed()
