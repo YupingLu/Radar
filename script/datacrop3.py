@@ -3,7 +3,7 @@
 # Missing values are filled by mean values.
 # radar_echo_classification, only 30, 40, 60 and 80 used
 # Author: Yuping Lu <yupinglu89@gmail.com>
-# Date: 01/29/2019
+# Date: 02/16/2019
 
 # load libs
 import pyart
@@ -142,21 +142,25 @@ for i in range(len(df_n0h.index)):
             mx = ma.masked_values(mx, 150.0) 
             t_n0h = mx.compressed()
             unmask_size = len(t_n0h)
-            # valid data >= 10%
+            # unmask size >= 10%
             if unmask_size < 90:
                 f_abandon.write('Too few n0h: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
             # get the most frequent radar_echo_classification
             m = mode(t_n0h)
-            res = m[0][0]
-            # valida data >= 5%
-            if res < 45:
-                f_abandon.write('Mode is small: ' + df_n0h.iloc[i,0] \
+            mode_value = m[0][0]
+            mode_count = m[1][0]
+            #print(m)
+            #print(mode_value)
+            #print(mode_count)
+            # mode count >= 5%
+            if mode_count < 45:
+                f_abandon.write('Mode Count is small: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
-            cnt[res] += 1
-            f_label.write(str(int(res))+'\n')
+            cnt[mode_value] += 1
+            f_label.write(str(int(mode_value))+'\n')
             
             tmp_n0c = data_n0c[r1:r1+60, c1:c1+60]
             tmp_n0k = data_n0k[r1:r1+60, c1:c1+60]
