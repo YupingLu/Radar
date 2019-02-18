@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Combine four variable datasets into one.
 # Author: Yuping Lu <yupinglu89@gmail.com>
-# Date: 11/06/2018
+# Date: 02/17/2019
 
 # load libs
 import numpy as np
@@ -9,14 +9,14 @@ import pandas as pd
 
 root = '/home/ylk/data/data3/0/'
 datasets = ['30', '40', '60', '80']
-path = '/home/ylk/workspace/dataloader/data/'
+path = '/home/ylk/dataloader/'
 
 for data in datasets:
     # Read data frame
     df = pd.read_csv(root + data + '.txt', header = None)
     f_data = open(path + data + '.txt', 'w')
 
-    for i in range(0, 60000, 4):
+    for i in range(0, 108916, 4):
         # load datasets
         cname = root + data + '/' + df.iloc[i,0] + '.csv'
         kname = root + data + '/' + df.iloc[i+1,0] + '.csv'

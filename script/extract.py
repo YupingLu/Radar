@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Extract datasets from datacrop3
 # Author: Yuping Lu <yupinglu89@gmail.com>
-# Date: 10/30/2018
+# Date: 02/17/2019
 
 # Load libs
 import pandas as pd
@@ -9,12 +9,10 @@ import shutil as sh
 
 # Number of datasets to extract for each type
 cnt = {
-    '30': 15000,
-    '40': 30000,
-    '60': 30000,
-    '70': 537,
-    '80': 30000,
-    '100': 61
+    '30': 27229,
+    '40': 27229,
+    '60': 27229,
+    '80': 27229,
 }
 
 # Read data frames
