@@ -142,8 +142,8 @@ for i in range(len(df_n0h.index)):
             mx = ma.masked_values(mx, 150.0) 
             t_n0h = mx.compressed()
             unmask_size = len(t_n0h)
-            # unmask size >= 10%
-            if unmask_size < 90:
+            # unmask size >= 5%
+            if unmask_size < 45:
                 f_abandon.write('Too few n0h: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
@@ -154,8 +154,8 @@ for i in range(len(df_n0h.index)):
             #print(m)
             #print(mode_value)
             #print(mode_count)
-            # mode count >= 5%
-            if mode_count < 45:
+            # mode count >= 2.5%
+            if mode_count < 22:
                 f_abandon.write('Mode Count is small: ' + df_n0h.iloc[i,0] \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
