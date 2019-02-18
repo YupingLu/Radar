@@ -121,12 +121,12 @@ for i in range(len(df_n0h.index)):
         continue
     data_n0r = tres
     
-    # Crop the file into 18 60*60 matrices
+    # Crop the file into 72 30*30 matrices
     for j in range(len(idx)):
         for k in range(len(idy)):
             r1 = idx[j]
             c1 = idy[k]
-            tmp_n0h = data_n0h[r1:r1+60, c1:c1+60]
+            tmp_n0h = data_n0h[r1:r1+30, c1:c1+30]
             # mask 0, 10, 20, 50, 70, 90, 100, 120, 140, 150
             # If the valid values of n0h is less then 90, abadon that entry.
             # abadon.txt
@@ -162,10 +162,10 @@ for i in range(len(df_n0h.index)):
             cnt[mode_value] += 1
             f_label.write(str(int(mode_value))+'\n')
             
-            tmp_n0c = data_n0c[r1:r1+60, c1:c1+60]
-            tmp_n0k = data_n0k[r1:r1+60, c1:c1+60]
-            tmp_n0x = data_n0x[r1:r1+60, c1:c1+60]
-            tmp_n0r = data_n0r[r1:r1+60, c1:c1+60]
+            tmp_n0c = data_n0c[r1:r1+30, c1:c1+30]
+            tmp_n0k = data_n0k[r1:r1+30, c1:c1+30]
+            tmp_n0x = data_n0x[r1:r1+30, c1:c1+30]
+            tmp_n0r = data_n0r[r1:r1+30, c1:c1+30]
             
             # Replace the missing values with mean values
             t_n0c = tmp_n0c.filled(tmp_n0c.mean())
