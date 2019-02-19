@@ -9,10 +9,10 @@ import shutil as sh
 
 # Number of datasets to extract for each type
 cnt = {
-    '30': 27229,
-    '40': 27229,
-    '60': 27229,
-    '80': 27229,
+    '30': 10192,
+    '40': 25974,
+    '60': 19166,
+    '80': 19166,
 }
 
 # Read data frames
@@ -25,7 +25,7 @@ df_n0x = pd.read_csv('name2/n0x.txt', header = None)
 # Extract datasets
 for key, value in cnt.items():
     count = 0
-    f = open('data3/0/'+key+'.txt',"w")
+    f = open(key+'.txt',"w")
     # Loop the files
     for i in range(len(df_label.index)):
         if count == value:
@@ -33,22 +33,22 @@ for key, value in cnt.items():
         if df_label.iloc[i,0] == int(key):
             # cp to data3/0/key
             src = 'data2/' + df_n0c.iloc[i,0] + '.csv'
-            dst = 'data3/0/' + key
+            dst = 'data3/' + key
             sh.copy2(src, dst)
             f.write(df_n0c.iloc[i,0] + '\n')
             
             src = 'data2/' + df_n0k.iloc[i,0] + '.csv'
-            dst = 'data3/0/' + key
+            dst = 'data3/' + key
             sh.copy2(src, dst)
             f.write(df_n0k.iloc[i,0] + '\n')
             
             src = 'data2/' + df_n0r.iloc[i,0] + '.csv'
-            dst = 'data3/0/' + key
+            dst = 'data3/' + key
             sh.copy2(src, dst)
             f.write(df_n0r.iloc[i,0] + '\n')
             
             src = 'data2/' + df_n0x.iloc[i,0] + '.csv'
-            dst = 'data3/0/' + key
+            dst = 'data3/' + key
             sh.copy2(src, dst)
             f.write(df_n0x.iloc[i,0] + '\n')
             

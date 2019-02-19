@@ -7,21 +7,21 @@
 import numpy as np
 import pandas as pd
 
-root = '/home/ylk/data/data3/0/'
+root = '/raid/ylk/150/'
 datasets = ['30', '40', '60', '80']
-path = '/home/ylk/dataloader/'
+path = '/home/ylk/dataloader/150/'
 
 for data in datasets:
     # Read data frame
     df = pd.read_csv(root + data + '.txt', header = None)
     f_data = open(path + data + '.txt', 'w')
 
-    for i in range(0, 108916, 4):
+    for i in range(0, len(df.index), 4):
         # load datasets
-        cname = root + data + '/' + df.iloc[i,0] + '.csv'
-        kname = root + data + '/' + df.iloc[i+1,0] + '.csv'
-        rname = root + data + '/' + df.iloc[i+2,0] + '.csv'
-        xname = root + data + '/' + df.iloc[i+3,0] + '.csv'
+        cname = root + 'data3/' + data + '/' + df.iloc[i,0] + '.csv'
+        kname = root + 'data3/' + data + '/' + df.iloc[i+1,0] + '.csv'
+        rname = root + 'data3/' + data + '/' + df.iloc[i+2,0] + '.csv'
+        xname = root + 'data3/' + data + '/' + df.iloc[i+3,0] + '.csv'
         n0c = np.loadtxt(cname, delimiter=',')
         n0k = np.loadtxt(kname, delimiter=',')
         n0r = np.loadtxt(rname, delimiter=',')

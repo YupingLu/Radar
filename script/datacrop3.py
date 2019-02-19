@@ -30,15 +30,15 @@ cnt = {
 }
 
 idx = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
-idy = [0, 30, 60, 90, 120, 150]
-#idy = [0]
+#idy = [0, 30, 60, 90, 120, 150]
+idy = [150]
 
 # Read data frames
-df_n0c = pd.read_csv('name/n0c.txt', header = None)
-df_n0h = pd.read_csv('name/n0h.txt', header = None)
-df_n0k = pd.read_csv('name/n0k.txt', header = None)
-df_n0r = pd.read_csv('name/n0r.txt', header = None)
-df_n0x = pd.read_csv('name/n0x.txt', header = None)
+df_n0c = pd.read_csv('/home/ylk/data/name/n0c.txt', header = None)
+df_n0h = pd.read_csv('/home/ylk/data/name/n0h.txt', header = None)
+df_n0k = pd.read_csv('/home/ylk/data/name/n0k.txt', header = None)
+df_n0r = pd.read_csv('/home/ylk/data/name/n0r.txt', header = None)
+df_n0x = pd.read_csv('/home/ylk/data/name/n0x.txt', header = None)
 
 f_error = open("name2/error.txt","w")
 f_abandon = open("name2/abandon.txt","w")
@@ -54,31 +54,31 @@ for i in range(len(df_n0h.index)):
     #    break
     # Read each variable file
     try:
-        N0H = pyart.io.read('final/'+df_n0h.iloc[i,0])
+        N0H = pyart.io.read('/home/ylk/data/final/'+df_n0h.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0h.iloc[i,0] + '\n')
         continue
         
     try:
-        N0C = pyart.io.read('final/'+df_n0c.iloc[i,0])
+        N0C = pyart.io.read('/home/ylk/data/final/'+df_n0c.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0c.iloc[i,0] + '\n')
         continue
         
     try:
-        N0K = pyart.io.read('final/'+df_n0k.iloc[i,0])
+        N0K = pyart.io.read('/home/ylk/data/final/'+df_n0k.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0k.iloc[i,0] + '\n')
         continue
         
     try:
-        N0R = pyart.io.read('final/'+df_n0r.iloc[i,0])
+        N0R = pyart.io.read('/home/ylk/data/final/'+df_n0r.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0r.iloc[i,0] + '\n')
         continue
         
     try:
-        N0X = pyart.io.read('final/'+df_n0x.iloc[i,0])
+        N0X = pyart.io.read('/home/ylk/data/final/'+df_n0x.iloc[i,0])
     except:
         f_error.write('Error file: ' + df_n0x.iloc[i,0] + '\n')
         continue  
