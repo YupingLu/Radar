@@ -11,7 +11,7 @@ root = '/home/ylk/dataloader/train/'
 datasets = ['30', '40', '60', '80']
 
 stdevs = np.zeros([4])
-means = np.array([0.71055726712349121, 0.0050725965774866422, -3.5223700112752816, 0.26145971462057027])
+means = np.array([0.7323535235051064, 0.08162954971487332, 4.290026623296434, 0.7662683645210233])
 
 for data in datasets:
     df = pd.read_csv(root + data + '.txt', header = None)
