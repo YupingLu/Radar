@@ -53,10 +53,10 @@ class DenseNet(nn.Module):
         super(DenseNet, self).__init__()
         # First convolution
         self.features = nn.Sequential(OrderedDict([
-            ('conv0', nn.Conv2d(3, num_init_features, kernel_size=7, stride=2, padding=3, bias=False)),
+            ('conv0', nn.Conv2d(4, num_init_features, kernel_size=3, stride=1, padding=1, bias=False)),
             ('norm0', nn.BatchNorm2d(num_init_features)),
             ('relu0', nn.ReLU(inplace=True)),
-            ('pool0', nn.MaxPool2d(kernel_size=3, stride=2, padding=1)),
+            ('pool0', nn.MaxPool2d(kernel_size=2, stride=2, padding=1)),
         ]))
         # Each denseblock
         num_features = num_init_features
@@ -93,27 +93,23 @@ class DenseNet(nn.Module):
 
 def densenet121(pretrained=False, **kwargs):
     """Densenet-121 model"""
-    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 24, 16),
-                     **kwargs)
+    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 24, 16), **kwargs)
     return model
 
 
 def densenet169(pretrained=False, **kwargs):
     """Densenet-169 model"""
-    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 32, 32),
-                     **kwargs)
+    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 32, 32), **kwargs)
     return model
 
 
 def densenet201(pretrained=False, **kwargs):
     """Densenet-201 model"""
-    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32),
-                     **kwargs)
+    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32), **kwargs)
     return model
 
 
 def densenet161(pretrained=False, **kwargs):
     """Densenet-161 model"""
-    model = DenseNet(num_init_features=96, growth_rate=48, block_config=(6, 12, 36, 24),
-                     **kwargs)
+    model = DenseNet(num_init_features=96, growth_rate=48, block_config=(6, 12, 36, 24), **kwargs)
     return model
