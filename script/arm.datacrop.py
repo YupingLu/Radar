@@ -42,7 +42,7 @@ for fname in os.listdir(directory):
                 n0c_size = len(data_n0c.compressed())
                 n0k_size = len(data_n0k.compressed())
                 # check missing values. Dataset with many missing values will be passed.
-                if n0r_size < 45 || n0x_size < 45 || n0c_size < 45 || n0k_size < 45:
+                if n0r_size < 45 or n0x_size < 45 or n0c_size < 45 or n0k_size < 45:
                     continue
                 # Replace the missing values with mean values
                 n0c = data_n0c.filled(data_n0c.mean())
