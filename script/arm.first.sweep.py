@@ -4,11 +4,13 @@
 # Date: 03/19/2019
 
 # load libs
+import os
 import pyart
 
-fname = 'sgpcsaprsurI7.00.20160101.001301.raw.cfrad.20151231_230724.915_CSAP_v80_SUR.nc'
+directory = '/home/ylk/arm/data/'
 
-radar = pyart.io.read_cfradial(fname)
-radar_zero = radar.extract_sweeps([0])
-
-pyart.io.write_cfradial(fname+'0', radar_zero)
+for fname in os.listdir(directory):
+    if fname.endswith(".nc"):
+        radar = pyart.io.read_cfradial(directory+fname)
+        radar_zero = radar.extract_sweeps([0])
+        pyart.io.write_cfradial('/home/ylk/arm/data1/'+fname+'0', radar_zero)
