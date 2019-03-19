@@ -50,7 +50,7 @@ for fname in os.listdir(directory):
                 n0x = data_n0x.filled(data_n0x.mean())
                 n0r = data_n0r.filled(data_n0r.mean())
                 # stack four datasets into one
-                filename = str(i) + '_' + str(r1) + '_' + str(c1) + '.csv'
+                filename = str(cnt) + '_' + str(r1) + '_' + str(c1) + '.csv'
                 f = open(path + '/' + filename, 'wb')
                 np.savetxt(f, n0c, delimiter=',')
                 np.savetxt(f, n0k, delimiter=',')
