@@ -36,6 +36,9 @@ for fname in os.listdir(directory):
                 data_n0x = N0X[r1:r1+30, c1:c1+30]
                 data_n0c = N0C[r1:r1+30, c1:c1+30]
                 data_n0k = N0K[r1:r1+30, c1:c1+30]
+                # check shape is (30, 30)
+                if data_n0r.shape != (30, 30) or data_n0x.shape != (30, 30) or data_n0c.shape != (30, 30) or data_n0k.shape != (30, 30):
+                    continue
                 # get the number of valid entries of each array
                 n0r_size = len(data_n0r.compressed())
                 n0x_size = len(data_n0x.compressed())
