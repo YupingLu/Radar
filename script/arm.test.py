@@ -13,7 +13,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision import transforms
-from datasets.nexraddataset import *
+from datasets.armdataset import *
 import models
 
 def test(args, model, device, test_loader, criterion):

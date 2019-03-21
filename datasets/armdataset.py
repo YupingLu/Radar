@@ -30,9 +30,9 @@ class ARMDataset(Dataset):
         
         for f in os.listdir(self.root):
             if f.endswith('.csv'):
-                    o = {}
-                    o['radar_path'] = dirpath + '/' + f
-                    self.files.append(o)
+                o = {}
+                o['radar_path'] = self.root + '/' + f
+                self.files.append(o)
                     
         self.transform = transform
     
