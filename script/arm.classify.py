@@ -32,7 +32,8 @@ def classify(args, model, device, test_loader, class_names):
             # compute output
             outputs = model(inputs)
             pred = outputs.max(1)[1] # get the index of the max 
-            print('{} {}'.format(fname[0], class_names[pred.item()]))
+            for i in range(len(fname)):
+                print('{} {}'.format(fname[i], class_names[pred[i].item()]))
     
 def main():
     model_names = sorted(name for name in models.__dict__
