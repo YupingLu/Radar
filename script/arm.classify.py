@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-Test script for ARM CSAPR
+Radar classification script for ARM CSAPR
 Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2019
 Last Update: 03/19/2019
 '''

@@ -31,6 +31,7 @@ class ARMDataset(Dataset):
         for f in os.listdir(self.root):
             if f.endswith('.csv'):
                 o = {}
+                0['fname'] = f
                 o['radar_path'] = self.root + '/' + f
                 self.files.append(o)
                     
@@ -41,9 +42,10 @@ class ARMDataset(Dataset):
 
     def __getitem__(self, idx):
         radar_path = self.files[idx]['radar_path']
+        fname = self.files[idx]['fname']
         radar = np.loadtxt(radar_path, delimiter=',')
         radar = radar.reshape((4, 30, 30))
-        sample = {'radar': radar}
+        sample = {'radar': radar, 'fname': fname}
         
         if self.transform:
             sample = self.transform(sample)
@@ -84,7 +86,8 @@ class ToTensor(object):
 
     def __call__(self, sample):
         radar = sample['radar']
-        return {'radar': torch.from_numpy(radar).to(torch.float)}
+        sample['radar'] = torch.from_numpy(radar).to(torch.float)
+        return sample
 
 class Normalize(object):
     """Normalize a tensor radar with mean and standard deviation."""
