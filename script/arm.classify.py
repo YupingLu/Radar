@@ -28,12 +28,11 @@ def classify(args, model, device, test_loader, class_names):
 
     with torch.no_grad():
         for data in test_loader:
-            inputs = data['radar'].to(device)
-            
+            inputs, fname = data['radar'].to(device), data['fname']
             # compute output
             outputs = model(inputs)
             pred = outputs.max(1)[1] # get the index of the max 
-            print(class_names[pred.item()])
+            print('{} {}'.format(fname[0], class_names[pred.item()]))
     
 def main():
     model_names = sorted(name for name in models.__dict__
