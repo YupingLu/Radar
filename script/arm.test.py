@@ -22,7 +22,7 @@ import models
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
-def test(args, model, device, test_loader):
+def classify(args, model, device, test_loader, class_names):
     
     model.eval()
 
@@ -32,15 +32,15 @@ def test(args, model, device, test_loader):
             
             # compute output
             outputs = model(inputs)
-            print(outputs)
             pred = outputs.max(1)[1] # get the index of the max 
+            print(class_names[pred.item()])
     
 def main():
     model_names = sorted(name for name in models.__dict__
         if name.islower() and not name.startswith("__")
         and callable(models.__dict__[name]))
     
-    parser = argparse.ArgumentParser(description='PyTorch NEXRAD Test')
+    parser = argparse.ArgumentParser(description='PyTorch ARM Test')
     # Model options
     parser.add_argument('--arch', '-a', metavar='ARCH', default='vgg19_bn',
                         choices=model_names,
@@ -86,7 +86,7 @@ def main():
 
     testset = ARMDataset(root=args.root, transform=transform)
     test_loader = DataLoader(testset, batch_size=args.batch_size, shuffle=False, **kwargs)
-
+    class_names = testset.idx2cat
     model = models.__dict__[args.arch](num_classes=4).to(device)
         
     # Load saved models.
@@ -95,7 +95,7 @@ def main():
     checkpoint = torch.load(args.path)
     model.load_state_dict(checkpoint['model'])
     
-    test(args, model, device, test_loader)
+    classify(args, model, device, test_loader, class_names)
             
 if __name__ == '__main__':
     main()
