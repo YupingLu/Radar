@@ -5,6 +5,9 @@ Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2019
 Last Update: 03/19/2019
 '''
 # load libs
+from __future__ import print_function
+import sys
+
 import os
 import argparse
 import random
@@ -16,16 +19,20 @@ from torchvision import transforms
 from datasets.armdataset import *
 import models
 
-def test(args, model, device, test_loader, criterion):
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def test(args, model, device, test_loader):
     
     model.eval()
 
     with torch.no_grad():
         for data in test_loader:
-            inputs, labels = data['radar'].to(device), data['category'].to(device)
+            inputs = data['radar'].to(device)
             
             # compute output
             outputs = model(inputs)
+            print(outputs)
             pred = outputs.max(1)[1] # get the index of the max 
     
 def main():
@@ -53,6 +60,9 @@ def main():
     # Path to saved models
     parser.add_argument('--path', type=str, default='checkpoint/resnet18.pth.tar', metavar='PATH',
                         help='path to save models (default: checkpoint/resnet18.pth.tar)')
+    # Path to ARM datasets
+    parser.add_argument('--root', type=str, default='/home/ylk/dataloader/arm', metavar='ROOT',
+                        help='path to ARM datasets (default: /home/ylk/dataloader/arm)')
     
     args = parser.parse_args()
     
@@ -74,20 +84,18 @@ def main():
                   std=[0.1592, 0.0570, 12.1113, 2.2363])
     ])
 
-    testset = NexradDataset(root='/home/ylk/data/dataloader/test/', transform=transform)
+    testset = ARMDataset(root=args.root, transform=transform)
     test_loader = DataLoader(testset, batch_size=args.batch_size, shuffle=False, **kwargs)
 
     model = models.__dict__[args.arch](num_classes=4).to(device)
-    
-    criterion = nn.CrossEntropyLoss()
-    
+        
     # Load saved models.
     eprint("==> Loading model '{}'".format(args.arch))
     assert os.path.isfile(args.path), 'Error: no checkpoint found!'
     checkpoint = torch.load(args.path)
     model.load_state_dict(checkpoint['model'])
     
-    test(args, model, device, test_loader, criterion)
+    test(args, model, device, test_loader)
             
 if __name__ == '__main__':
     main()
