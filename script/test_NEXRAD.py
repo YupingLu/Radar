@@ -2,10 +2,10 @@
 '''
 Test script for NEXRAD
 Different from test.py. This script is meant to test the raw four variable files.
-Currently, this script only measures idx = [0, 60, 120, 180, 240, 300] idy = [0, 60] 
-for each variable file.
-Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2018
-Last Update: 1/10/2019
+Currently, this script only measures idx = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330] 
+idy = [0, 30, 60, 90, 120, 150] for each variable file.
+Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2019
+Last Update: 3/25/2019
 '''
 # load libs
 from __future__ import print_function

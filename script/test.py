@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 '''
 Test script for NEXRAD
-Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2018
-Last Update: 12/13/2018
+Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2019
+Last Update: 03/25/2019
 '''
 # load libs
 from __future__ import print_function
