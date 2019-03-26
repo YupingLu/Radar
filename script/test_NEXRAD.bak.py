@@ -227,26 +227,7 @@ def viz_res(n, vname):
     display.set_limits(xlim=(-50, 50), ylim=(-50, 50), ax=ax)
     plt.show();
 
-    fig.savefig(vname+".png", bbox_inches='tight')
-
-def viz_resr(n, vname):
-    N = pyart.io.read(n)
-    display = pyart.graph.RadarMapDisplay(N)
-    x = N.fields[vname]['data']
-    
-    m = np.zeros_like(x)
-    m[:,36:] = 1
-    y = ma.masked_array(x, m)
-    N.fields[vname]['data'] = y
-
-    fig = plt.figure(figsize=(6, 5))
-    
-    ax = fig.add_subplot(111)
-    display.plot(vname, 0, title=vname, colorbar_label='', ax=ax)
-    display.set_limits(xlim=(-50, 50), ylim=(-50, 50), ax=ax)
-    plt.show();
-
-    fig.savefig(vname+".png", bbox_inches='tight')
+    fig.savefig("./tmp_test/"+vname+".png", bbox_inches='tight')
 
 def viz_ress(n, vname):
     N = pyart.io.read(n)
@@ -282,14 +263,14 @@ def viz_ress(n, vname):
     display.set_limits(xlim=(-50, 50), ylim=(-50, 50), ax=ax)
     plt.show();
 
-    fig.savefig(vname+".png", bbox_inches='tight')
+    fig.savefig("./tmp_test/"+vname+".png", bbox_inches='tight')
 
 # Visualize the classification results
 def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     viz_res(n0c, 'cross_correlation_ratio')
     viz_res(n0k, 'specific_differential_phase')
     viz_res(n0x, 'differential_reflectivity')
-    viz_resr(n0r, 'reflectivity')
+    viz_res(n0r, 'reflectivity')
     viz_ress(n0h, 'radar_echo_classification')
     
     N0H = pyart.io.read(n0h)
