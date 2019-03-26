@@ -338,11 +338,11 @@ def main():
     args = parser.parse_args()
     
     # path to the raw data
-    n0h = '/home/ylk/data/test_nexrad/processed/KOUN_SDUS84_N0HVNX_201801011620'
-    n0c = '/home/ylk/data/test_nexrad/processed/KOUN_SDUS84_N0CVNX_201801011620'
-    n0k = '/home/ylk/data/test_nexrad/processed/KOUN_SDUS84_N0KVNX_201801011620'
-    n0r = '/home/ylk/data/test_nexrad/processed/KOUN_SDUS54_N0RVNX_201801011620'
-    n0x = '/home/ylk/data/test_nexrad/processed/KOUN_SDUS84_N0XVNX_201801011620'
+    n0h = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0HVNX_201801011620'
+    n0c = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0CVNX_201801011620'
+    n0k = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0KVNX_201801011620'
+    n0r = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS54_N0RVNX_201801011620'
+    n0x = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0XVNX_201801011620'
 
     # Use CUDA
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_id
