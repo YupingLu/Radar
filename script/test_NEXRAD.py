@@ -39,8 +39,8 @@ def discrete_cmap(N, base_cmap=None):
     cmap_name = base.name + str(N)
     return base.from_list(cmap_name, color_list, N)
 
-idx = [0, 60, 120, 180, 240, 300]
-idy = [0, 60]
+idx = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330] 
+idy = [0, 30, 60, 90, 120, 150]
 cnt = {
     30 : 'Ice Crystals', # Ice Crystals (IC) #
     40 : 'Dry Snow', # Dry Snow (DS) #
@@ -53,36 +53,16 @@ idx2cat = {0: 80, 1: 40, 2: 30, 3: 60}
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
-def test(args, model, device, test_loader, criterion):
+def test(args, model, device, test_loader):
     model.eval()
-    test_loss = 0
-    correct = 0
-    acc = 0
     r = 0
-    
     with torch.no_grad():
         for data in test_loader:
             inputs, labels = data['radar'].to(device), data['category'].to(device)
             # compute output
             outputs = model(inputs)
-            loss = criterion(outputs, labels)
-            # measure accuracy and record loss   
-            test_loss += loss.item() # sum up batch loss
             pred = outputs.max(1)[1] # get the index of the max log-probability
             r = pred.item()
-            correct += pred.eq(labels).sum().item()
-    
-    # print average loss and accuracy
-    '''
-    test_loss /= len(test_loader)
-    acc = 100. * correct / len(test_loader.dataset)
-    print('Test set: Average loss:\t'
-          '{:.3f}\t'
-          'Accuracy: {}/{}\t'
-          '{:.3f}'.format(test_loss, correct, len(test_loader.dataset), acc))
-    '''
-    #return correct / len(test_loader.dataset)
-    #return idx2cat[r]
     return r
 
 # Call trained model to classify cropped matrices
@@ -91,7 +71,6 @@ def classify(path, label, transform, device, kwargs, args):
     test_loader = DataLoader(testset, batch_size=args.batch_size, shuffle=False, **kwargs)
     
     model = models.__dict__[args.arch](num_classes=4).to(device)
-    criterion = nn.CrossEntropyLoss()
 
     # Load saved models.
     #eprint("==> Loading model '{}'".format(args.arch))
@@ -99,12 +78,12 @@ def classify(path, label, transform, device, kwargs, args):
     checkpoint = torch.load(args.path)
     model.load_state_dict(checkpoint['model'])
 
-    return test(args, model, device, test_loader, criterion)
+    return test(args, model, device, test_loader)
 
 # Crop the file into 12 60*60 matrices
 def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
     # np matrix to store the classification results
-    results = np.zeros((360, 120))
+    results = np.zeros((360, 180))
 
     # read data
     try:
@@ -157,38 +136,56 @@ def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
         sys.exit(-1)
 
     # Extend n0r
+    # Expand by 5 times
     data_n0r_repeat = np.repeat(data_n0r, 5, axis=1)
+    # Insert another 1 every 23
+    tres = np.empty((360, 0))
+    for idk in range(1150):
+        tres = np.append(tres, data_n0r_repeat[:,idk].reshape(360,1), axis=1)
+        if (idk+1) % 23 == 0:
+            tres = np.append(tres, data_n0r_repeat[:,idk].reshape(360,1), axis=1)
+    if tres.shape != (360, 1200):
+        eprint('Error dim: ' + n0r + '\n')
+        sys.exit(-1)
+    data_n0r = tres
+    data_n0r = ma.masked_values(data_n0r, -999.0)
 
     for j in range(len(idx)):
         for k in range(len(idy)):
             r1 = idx[j]
             c1 = idy[k]
-            tmp_n0h = data_n0h[r1:r1+60, c1:c1+60]
-            # mask 0, 10, 20, 140, 150
-            # If the valid values of n0h is less then 6, abadon that entry.
+            tmp_n0h = data_n0h[r1:r1+30, c1:c1+30]
+            # mask 0, 10, 20, 50, 70, 90, 100, 120, 140, 150
+            # If the valid values of n0h is less then 90, abadon that entry.
             mx = ma.masked_values(tmp_n0h, 0.0) 
             mx = ma.masked_values(mx, 10.0) 
             mx = ma.masked_values(mx, 20.0)
+            mx = ma.masked_values(mx, 50.0)
+            mx = ma.masked_values(mx, 70.0)
+            mx = ma.masked_values(mx, 90.0)
+            mx = ma.masked_values(mx, 100.0)
+            mx = ma.masked_values(mx, 120.0)
             mx = ma.masked_values(mx, 140.0) 
             mx = ma.masked_values(mx, 150.0) 
             t_n0h = mx.compressed()
             unmask_size = len(t_n0h)
-            if unmask_size < 12:
+            if unmask_size < 45:
                 eprint('Too few n0h: ' + n0h \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
             # get the most frequent radar_echo_classification
             m = mode(t_n0h)
-            res = m[0][0]
-            if res < 6:
+            mode_value = m[0][0]
+            mode_count = m[1][0]
+            if mode_count < 22:
                 eprint('Mode is small: ' + n0h \
                                 + ' ' + str(r1) + ' ' + str(c1) + '\n')
                 continue
             
-            tmp_n0c = data_n0c[r1:r1+60, c1:c1+60]
-            tmp_n0k = data_n0k[r1:r1+60, c1:c1+60]
-            tmp_n0r = data_n0r_repeat[r1:r1+60, c1:c1+60]
-            tmp_n0x = data_n0x[r1:r1+60, c1:c1+60]
+            tmp_n0c = data_n0c[r1:r1+30, c1:c1+30]
+            tmp_n0k = data_n0k[r1:r1+30, c1:c1+30]
+            tmp_n0r = data_n0r[r1:r1+30, c1:c1+30]
+            tmp_n0x = data_n0x[r1:r1+30, c1:c1+30]
             
             # Replace the missing values with mean values
             t_n0c = tmp_n0c.filled(tmp_n0c.mean())
@@ -206,9 +203,9 @@ def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
             f.close()
             
             # classify the file
-            acc = classify(fname, cat2idx[cnt[res]], transform, device, kwargs, args)
+            acc = classify(fname, cat2idx[cnt[mode_value]], transform, device, kwargs, args)
             # Save results
-            results[r1:r1+60, c1:c1+60] = acc
+            results[r1:r1+30, c1:c1+30] = acc
     
     return results
 
@@ -219,7 +216,7 @@ def viz_res(n, vname):
     x = N.fields[vname]['data']
     
     m = np.zeros_like(x)
-    m[:,120:] = 1
+    m[:,180:] = 1
     y = ma.masked_array(x, m)
     N.fields[vname]['data'] = y
 
@@ -238,7 +235,7 @@ def viz_ress(n, vname):
     x = N.fields[vname]['data']
     
     m = np.zeros_like(x)
-    m[:,120:] = 1
+    m[:,180:] = 1
     y = ma.masked_array(x, m)
     y = ma.masked_values(y, 0.0) 
     y = ma.masked_values(y, 10.0) 
@@ -272,9 +269,8 @@ def viz_ress(n, vname):
 def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     viz_res(n0c, 'cross_correlation_ratio')
     viz_res(n0k, 'specific_differential_phase')
-    viz_res(n0r, 'reflectivity')
     viz_res(n0x, 'differential_reflectivity')
-
+    viz_res(n0r, 'reflectivity')
     viz_ress(n0h, 'radar_echo_classification')
     
     N0H = pyart.io.read(n0h)
@@ -282,19 +278,24 @@ def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     data_n0h = N0H.fields['radar_echo_classification']['data']
     
     m = np.zeros_like(data_n0h)
-    m[:,120:] = 1
+    m[:,180:] = 1
     y = ma.masked_array(data_n0h, m)
     y = ma.masked_values(y, 0.0) 
     y = ma.masked_values(y, 10.0) 
     y = ma.masked_values(y, 20.0)
+    y = ma.masked_values(y, 50.0)
+    y = ma.masked_values(y, 70.0)
+    y = ma.masked_values(y, 90.0)
+    y = ma.masked_values(y, 100.0)
+    y = ma.masked_values(y, 120.0)
     y = ma.masked_values(y, 140.0) 
     y = ma.masked_values(y, 150.0)
-    results = ma.masked_where(ma.getmask(y[:,:120]), results)
+    results = ma.masked_where(ma.getmask(y[:,:180]), results)
     for j in range(len(idx)):
         for k in range(len(idy)):
             r1 = idx[j]
             c1 = idy[k]
-            y[r1:r1+60, c1:c1+60] = results[r1:r1+60, c1:c1+60]
+            y[r1:r1+30, c1:c1+30] = results[r1:r1+30, c1:c1+30]
 
     N0H.fields['radar_echo_classification']['data'] = y
 
@@ -328,8 +329,8 @@ def main():
     parser.add_argument('--gpu-id', type=str, default='3', metavar='N',
                         help='id(s) for CUDA_VISIBLE_DEVICES (default: 3)')
     # Miscs
-    parser.add_argument('--seed', type=int, default=20181212, metavar='S',
-                        help='random seed (default: 20181212)')
+    parser.add_argument('--seed', type=int, default=20190225, metavar='S',
+                        help='random seed (default: 20190225)')
     # Path to saved models
     parser.add_argument('--path', type=str, default='checkpoint/resnet18.pth.tar', metavar='PATH',
                         help='path to save models (default: checkpoint/resnet18.pth.tar)')
@@ -357,8 +358,8 @@ def main():
         
     transform = transforms.Compose([
         ToTensor(),
-        Normalize(mean=[0.7207, 0.0029, -1.6154, 0.5690],
-                  std=[0.1592, 0.0570, 12.1113, 2.2363])
+        Normalize(mean=[0.7324, 0.0816, 4.29, 0.7663],
+                  std=[0.1975, 0.4383, 13.1661, 2.118])
     ])
     
     results = datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args)
