@@ -83,7 +83,7 @@ def classify(path, label, transform, device, kwargs, args):
 # Crop the file into 12 60*60 matrices
 def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
     # np matrix to store the classification results
-    results = np.zeros((360, 180))
+    results = np.full((360, 180), -1)
 
     # read data
     try:
@@ -206,7 +206,7 @@ def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
             acc = classify(fname, cat2idx[cnt[mode_value]], transform, device, kwargs, args)
             # Save results
             results[r1:r1+30, c1:c1+30] = acc
-    
+    results = ma.masked_values(results, -1) 
     return results
 
 # Save the visualization of classification results
