@@ -57,11 +57,11 @@ def main():
     
     parser = argparse.ArgumentParser(description='PyTorch NEXRAD Test')
     # Model options
-    parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet18',
+    parser.add_argument('--arch', '-a', metavar='ARCH', default='vgg19_bn',
                         choices=model_names,
                         help='model architecture: ' +
                              ' | '.join(model_names) +
-                            ' (default: resnet18)')
+                            ' (default: vgg19_bn)')
     parser.add_argument('--batch-size', type=int, default=256, metavar='N',
                         help='input batch size for test (default: 256)')
     #Device options
@@ -70,11 +70,11 @@ def main():
     parser.add_argument('--gpu-id', type=str, default='3', metavar='N',
                         help='id(s) for CUDA_VISIBLE_DEVICES (default: 3)')
     # Miscs
-    parser.add_argument('--seed', type=int, default=20181212, metavar='S',
-                        help='random seed (default: 20181212)')
+    parser.add_argument('--seed', type=int, default=20190225, metavar='S',
+                        help='random seed (default: 20190225)')
     # Path to saved models
-    parser.add_argument('--path', type=str, default='checkpoint/resnet18.pth.tar', metavar='PATH',
-                        help='path to save models (default: checkpoint/resnet18.pth.tar)')
+    parser.add_argument('--path', type=str, default='checkpoint/vgg19_bn.pth.tar', metavar='PATH',
+                        help='path to save models (default: checkpoint/vgg19_bn.pth.tar)')
     
     args = parser.parse_args()
     
@@ -92,11 +92,11 @@ def main():
         
     transform = transforms.Compose([
         ToTensor(),
-        Normalize(mean=[0.7207, 0.0029, -1.6154, 0.5690],
-                  std=[0.1592, 0.0570, 12.1113, 2.2363])
+        Normalize(mean=[0.7324, 0.0816, 4.29, 0.7663],
+                  std=[0.1975, 0.4383, 13.1661, 2.118])
     ])
 
-    testset = NexradDataset(root='/home/ylk/data/dataloader/test/', transform=transform)
+    testset = NexradDataset(root='/home/ylk/dataloader/test/', transform=transform)
     test_loader = DataLoader(testset, batch_size=args.batch_size, shuffle=False, **kwargs)
 
     model = models.__dict__[args.arch](num_classes=4).to(device)
