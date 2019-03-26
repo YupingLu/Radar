@@ -326,7 +326,7 @@ def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     display_h.set_limits(xlim=(-50, 50), ylim=(-50, 50), ax=ax)
     plt.show();
 
-    fig.savefig("./tmp_test/res.png", bbox_inches='tight')
+    fig.savefig("res.png", bbox_inches='tight')
 
 def main():
     model_names = sorted(name for name in models.__dict__
