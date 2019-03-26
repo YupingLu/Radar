@@ -224,7 +224,7 @@ def viz_res(n, vname):
     
     ax = fig.add_subplot(111)
     display.plot(vname, 0, title=vname, colorbar_label='', ax=ax)
-    display.set_limits(xlim=(-40, 40), ylim=(-40, 40), ax=ax)
+    display.set_limits(xlim=(-50, 50), ylim=(-50, 50), ax=ax)
     plt.show();
 
     fig.savefig("./tmp_test/"+vname+".png", bbox_inches='tight')
@@ -260,7 +260,7 @@ def viz_ress(n, vname):
     ax = fig.add_subplot(111)
     #display.plot(vname, 0, title=vname, colorbar_label='', ax=ax)
     display.plot(vname, 0, title=vname, colorbar_label='', ticks=range(4), ticklabs=['Big Drops', 'Dry Snow', 'Ice Crystals', 'Rain'], ax=ax, vmin=-0.5, vmax=3.5, cmap=discrete_cmap(4, 'rainbow'))
-    display.set_limits(xlim=(-40, 40), ylim=(-40, 40), ax=ax)
+    display.set_limits(xlim=(-50, 50), ylim=(-50, 50), ax=ax)
     plt.show();
 
     fig.savefig("./tmp_test/"+vname+".png", bbox_inches='tight')
@@ -304,7 +304,7 @@ def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     ax = fig.add_subplot(111)
     display_h.plot('radar_echo_classification', 0, title='classification results', colorbar_label='', ticks=range(4), ticklabs=['Big Drops', 'Dry Snow', 'Ice Crystals', 'Rain'], ax=ax, vmin=-0.5, vmax=3.5, cmap=discrete_cmap(4, 'rainbow'))
     #display_h.plot('radar_echo_classification', 0, title='classification results', colorbar_label='', ax=ax, cmap=cMap)
-    display_h.set_limits(xlim=(-40, 40), ylim=(-40, 40), ax=ax)
+    display_h.set_limits(xlim=(-50, 50), ylim=(-50, 50), ax=ax)
     plt.show();
 
     fig.savefig("./tmp_test/res.png", bbox_inches='tight')
@@ -316,11 +316,11 @@ def main():
     
     parser = argparse.ArgumentParser(description='PyTorch NEXRAD Test')
     # Model options
-    parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet18',
+    parser.add_argument('--arch', '-a', metavar='ARCH', default='vgg19_bn',
                         choices=model_names,
                         help='model architecture: ' +
                              ' | '.join(model_names) +
-                            ' (default: resnet18)')
+                            ' (default: vgg19_bn)')
     parser.add_argument('--batch-size', type=int, default=256, metavar='N',
                         help='input batch size for test (default: 256)')
     #Device options
@@ -332,8 +332,8 @@ def main():
     parser.add_argument('--seed', type=int, default=20190225, metavar='S',
                         help='random seed (default: 20190225)')
     # Path to saved models
-    parser.add_argument('--path', type=str, default='checkpoint/resnet18.pth.tar', metavar='PATH',
-                        help='path to save models (default: checkpoint/resnet18.pth.tar)')
+    parser.add_argument('--path', type=str, default='checkpoint/vgg19_bn.pth.tar', metavar='PATH',
+                        help='path to save models (default: checkpoint/vgg19_bn.pth.tar)')
 
     args = parser.parse_args()
     
