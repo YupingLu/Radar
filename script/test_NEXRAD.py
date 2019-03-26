@@ -235,7 +235,7 @@ def viz_resr(n, vname):
     x = N.fields[vname]['data']
     
     m = np.zeros_like(x)
-    m[:,36:] = 1
+    m[:,45:] = 1
     y = ma.masked_array(x, m)
     N.fields[vname]['data'] = y
 
