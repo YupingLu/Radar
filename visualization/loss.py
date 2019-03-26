@@ -3,7 +3,6 @@
 # Author: Yuping Lu <yupinglu89@gmail.com>
 # Date: 02/28/2019
 
-%matplotlib inline
 # Load the lib
 import matplotlib.pyplot as plt
 import pandas as pd
