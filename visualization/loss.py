@@ -7,7 +7,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-fname = 'resnet101'
+fname = 'resnet18'
 
 # Read outputs
 df = pd.read_csv(fname+'.out', delimiter="\t", header = None)
@@ -31,24 +31,30 @@ epoch_count = range(1, epochs + 1)
 
 # Visualize loss history
 f = plt.figure()
+ax1 = plt.axes()
 
-plt.plot(epoch_count, train_loss, 'r--')
-plt.plot(epoch_count, validation_loss, 'b-')
-plt.legend(['Train Loss', 'Validation Loss'])
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
+plt.plot(epoch_count, train_loss, 'r--', linewidth=1)
+plt.plot(epoch_count, validation_loss, 'b-', linewidth=1)
+plt.legend(['ResNet-18 Train', 'ResNet-18 Val'])
+plt.xlabel('epochs')
+plt.ylabel('loss')
+ax1.spines['right'].set_visible(False)
+ax1.spines['top'].set_visible(False)
 plt.show()
 
 f.savefig(fname+'.loss.png', bbox_inches='tight')
 
 # Visualize accuracy history
 f = plt.figure()
+ax1 = plt.axes()
 
-plt.plot(epoch_count, train_accuracy, 'r--')
-plt.plot(epoch_count, validation_accuracy, 'b-')
-plt.legend(['Train Accuracy', 'Validation Accuracy'])
-plt.xlabel('Epoch')
-plt.ylabel('Accuracy')
+plt.plot(epoch_count, train_accuracy, 'r--', linewidth=1)
+plt.plot(epoch_count, validation_accuracy, 'b-', linewidth=1)
+plt.legend(['ResNet-18 Train', 'ResNet-18 Val'])
+plt.xlabel('epochs')
+plt.ylabel('accuracy(%)')
+ax1.spines['right'].set_visible(False)
+ax1.spines['top'].set_visible(False)
 plt.show();
 
 f.savefig(fname+'.accuracy.png', bbox_inches='tight')
