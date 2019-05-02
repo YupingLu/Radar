@@ -248,7 +248,7 @@ def viz_resr(n, vname):
 
     fig.savefig(vname+".png", bbox_inches='tight')
 
-def viz_ress(n, vname):
+def viz_ress(n, vname, results):
     N = pyart.io.read(n)
     display = pyart.graph.RadarMapDisplay(N)
     x = N.fields[vname]['data']
@@ -265,6 +265,8 @@ def viz_ress(n, vname):
     y = ma.masked_values(y, 100.0)
     y = ma.masked_values(y, 140.0) 
     y = ma.masked_values(y, 150.0) 
+    
+    y = ma.masked_where(ma.getmask(y[:,:180]), results)
 
     y = np.where(y == 80, 0, y)
     y = np.where(y == 40, 1, y)
@@ -290,7 +292,7 @@ def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     viz_res(n0k, 'specific_differential_phase')
     viz_res(n0x, 'differential_reflectivity')
     viz_resr(n0r, 'reflectivity')
-    viz_ress(n0h, 'radar_echo_classification')
+    viz_ress(n0h, 'radar_echo_classification', results)
     
     N0H = pyart.io.read(n0h)
     display_h = pyart.graph.RadarMapDisplay(N0H)
@@ -335,11 +337,11 @@ def main():
     
     parser = argparse.ArgumentParser(description='PyTorch NEXRAD Test')
     # Model options
-    parser.add_argument('--arch', '-a', metavar='ARCH', default='vgg19_bn',
+    parser.add_argument('--arch', '-a', metavar='ARCH', default='resnet18',
                         choices=model_names,
                         help='model architecture: ' +
                              ' | '.join(model_names) +
-                            ' (default: vgg19_bn)')
+                            ' (default: resnet18)')
     parser.add_argument('--batch-size', type=int, default=256, metavar='N',
                         help='input batch size for test (default: 256)')
     #Device options
@@ -351,8 +353,8 @@ def main():
     parser.add_argument('--seed', type=int, default=20190225, metavar='S',
                         help='random seed (default: 20190225)')
     # Path to saved models
-    parser.add_argument('--path', type=str, default='checkpoint/vgg19_bn.pth.tar', metavar='PATH',
-                        help='path to save models (default: checkpoint/vgg19_bn.pth.tar)')
+    parser.add_argument('--path', type=str, default='checkpoint/resnet18.pth.tar', metavar='PATH',
+                        help='path to save models (default: checkpoint/resnet18.pth.tar)')
 
     args = parser.parse_args()
     
