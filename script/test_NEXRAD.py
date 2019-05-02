@@ -206,7 +206,7 @@ def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
             acc = classify(fname, cat2idx[cnt[mode_value]], transform, device, kwargs, args)
             # Save results
             results[r1:r1+30, c1:c1+30] = acc
-    results = ma.masked_values(results, -1) 
+    #results = ma.masked_values(results, -1) 
     return results
 
 # Save the visualization of classification results
@@ -255,6 +255,11 @@ def viz_ress(n, vname, results):
     
     m = np.zeros_like(x)
     m[:,180:] = 1
+    for j in range(360):
+        for k in range(180):
+            if results[j][k] == -1:
+                m[j][k] = 1
+
     y = ma.masked_array(x, m)
     y = ma.masked_values(y, 0.0) 
     y = ma.masked_values(y, 10.0) 
@@ -265,8 +270,6 @@ def viz_ress(n, vname, results):
     y = ma.masked_values(y, 100.0)
     y = ma.masked_values(y, 140.0) 
     y = ma.masked_values(y, 150.0) 
-    
-    y = ma.masked_where(ma.getmask(y[:,:180]), results)
 
     y = np.where(y == 80, 0, y)
     y = np.where(y == 40, 1, y)
@@ -311,6 +314,7 @@ def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     y = ma.masked_values(y, 120.0)
     y = ma.masked_values(y, 140.0) 
     y = ma.masked_values(y, 150.0)
+    results = ma.masked_values(results, -1) 
     results = ma.masked_where(ma.getmask(y[:,:180]), results)
     for j in range(len(idx)):
         for k in range(len(idy)):
