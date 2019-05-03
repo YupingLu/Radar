@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 '''
-Test script for NEXRAD
-Different from test.py. This script is meant to test the raw four variable files.
-Currently, this script only measures idx = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330] 
-idy = [0, 30, 60, 90, 120, 150] for each variable file.
+Scripts to viz the selected five variables and classification results.
+radar_echo_classification are visualized with filters.
 Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2019
-Last Update: 5/2/2019
+Last Update: 5/3/2019
 '''
 # load libs
 from __future__ import print_function
@@ -84,6 +82,7 @@ def classify(path, label, transform, device, kwargs, args):
 def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
     # np matrix to store the classification results
     results = np.full((360, 180), -1)
+    labels = np.full((360, 180), -1)
 
     # read data
     try:
@@ -205,9 +204,11 @@ def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
             # classify the file
             acc = classify(fname, cat2idx[cnt[mode_value]], transform, device, kwargs, args)
             # Save results
+            labels[r1:r1+30, c1:c1+30] = mode_value
             results[r1:r1+30, c1:c1+30] = acc
-    #results = ma.masked_values(results, -1) 
-    return results
+    results = ma.masked_values(results, -1)
+    labels = ma.masked_values(labels, -1)
+    return results, labels
 
 # Save the visualization of classification results
 def viz_res(n, vname):
@@ -255,11 +256,6 @@ def viz_ress(n, vname, results):
     
     m = np.zeros_like(x)
     m[:,180:] = 1
-    for j in range(360):
-        for k in range(180):
-            if results[j][k] == -1:
-                m[j][k] = 1
-
     y = ma.masked_array(x, m)
     y = ma.masked_values(y, 0.0) 
     y = ma.masked_values(y, 10.0) 
@@ -270,7 +266,12 @@ def viz_ress(n, vname, results):
     y = ma.masked_values(y, 100.0)
     y = ma.masked_values(y, 140.0) 
     y = ma.masked_values(y, 150.0) 
-
+    labels = ma.masked_where(ma.getmask(y[:,:180]), labels)
+    for j in range(len(idx)):
+        for k in range(len(idy)):
+            r1 = idx[j]
+            c1 = idy[k]
+            y[r1:r1+30, c1:c1+30] = labels[r1:r1+30, c1:c1+30]
     y = np.where(y == 80, 0, y)
     y = np.where(y == 40, 1, y)
     y = np.where(y == 30, 2, y)
@@ -290,12 +291,12 @@ def viz_ress(n, vname, results):
     fig.savefig(vname+".png", bbox_inches='tight')
 
 # Visualize the classification results
-def plot_res(n0h, n0c, n0k, n0r, n0x, results):
+def plot_res(n0h, n0c, n0k, n0r, n0x, results, labels):
     viz_res(n0c, 'cross_correlation_ratio')
     viz_res(n0k, 'specific_differential_phase')
     viz_res(n0x, 'differential_reflectivity')
     viz_resr(n0r, 'reflectivity')
-    viz_ress(n0h, 'radar_echo_classification', results)
+    viz_ress(n0h, 'radar_echo_classification', labels)
     
     N0H = pyart.io.read(n0h)
     display_h = pyart.graph.RadarMapDisplay(N0H)
@@ -314,7 +315,6 @@ def plot_res(n0h, n0c, n0k, n0r, n0x, results):
     y = ma.masked_values(y, 120.0)
     y = ma.masked_values(y, 140.0) 
     y = ma.masked_values(y, 150.0)
-    results = ma.masked_values(results, -1) 
     results = ma.masked_where(ma.getmask(y[:,:180]), results)
     for j in range(len(idx)):
         for k in range(len(idy)):
@@ -387,10 +387,10 @@ def main():
                   std=[0.1975, 0.4383, 13.1661, 2.118])
     ])
     
-    results = datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args)
+    results, labels = datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args)
 
     # Visualize the classification results
-    plot_res(n0h, n0c, n0k, n0r, n0x, results)
+    plot_res(n0h, n0c, n0k, n0r, n0x, results, labels)
     
 if __name__ == '__main__':
     main()
