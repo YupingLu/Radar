@@ -204,7 +204,7 @@ def datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args):
             # classify the file
             acc = classify(fname, cat2idx[cnt[mode_value]], transform, device, kwargs, args)
             # Save results
-            labels[r1:r1+30, c1:c1+30] = mode_value
+            labels[r1:r1+30, c1:c1+30] = cat2idx[cnt[mode_value]]
             results[r1:r1+30, c1:c1+30] = acc
     results = ma.masked_values(results, -1)
     labels = ma.masked_values(labels, -1)
@@ -249,7 +249,7 @@ def viz_resr(n, vname):
 
     fig.savefig(vname+".png", bbox_inches='tight')
 
-def viz_ress(n, vname, results):
+def viz_ress(n, vname, labels):
     N = pyart.io.read(n)
     display = pyart.graph.RadarMapDisplay(N)
     x = N.fields[vname]['data']
@@ -272,11 +272,11 @@ def viz_ress(n, vname, results):
             r1 = idx[j]
             c1 = idy[k]
             y[r1:r1+30, c1:c1+30] = labels[r1:r1+30, c1:c1+30]
-    y = np.where(y == 80, 0, y)
-    y = np.where(y == 40, 1, y)
-    y = np.where(y == 30, 2, y)
-    y = np.where(y == 60, 3, y)
-    y = ma.masked_where(y > 3, y)
+    #y = np.where(y == 80, 0, y)
+    #y = np.where(y == 40, 1, y)
+    #y = np.where(y == 30, 2, y)
+    #y = np.where(y == 60, 3, y)
+    #y = ma.masked_where(y > 3, y)
 
     N.fields[vname]['data'] = y
 
