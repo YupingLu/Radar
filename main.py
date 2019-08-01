@@ -116,16 +116,16 @@ def main():
                         help='learning rate (default: 0.1)')
     parser.add_argument('--momentum', type=float, default=0.9, metavar='M',
                         help='SGD momentum (default: 0.9)')
-    parser.add_argument('--weight-decay', type=float, default=5e-4, metavar='W',
-                        help='weight decay (default: 5e-4)')
+    parser.add_argument('--weight-decay', type=float, default=1e-3, metavar='W',
+                        help='weight decay (default: 1e-3)')
     #Device options
     parser.add_argument('--no-cuda', action='store_true', default=False,
                         help='disables CUDA training')
     parser.add_argument('--gpu-id', type=str, default='3', metavar='N',
                         help='id(s) for CUDA_VISIBLE_DEVICES (default: 3)')
     # Miscs
-    parser.add_argument('--seed', type=int, default=20190225, metavar='S',
-                        help='random seed (default: 20190225)')
+    parser.add_argument('--seed', type=int, default=20190801, metavar='S',
+                        help='random seed (default: 20190801)')
     parser.add_argument('--log-interval', type=int, default=10, metavar='N',
                         help='how many batches to wait before logging training status')
     # Checkpoint
@@ -149,7 +149,7 @@ def main():
     kwargs = {'num_workers': 4, 'pin_memory': True} if use_cuda else {}
     
     train_transform = transforms.Compose([
-        RandomCrop(padding=7),
+        RandomCrop(padding=8),
         RandomHorizontalFlip(),
         RandomVerticalFlip(),
         ToTensor(),
