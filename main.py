@@ -153,14 +153,14 @@ def main():
         RandomHorizontalFlip(),
         RandomVerticalFlip(),
         ToTensor(),
-        Normalize(mean=[0.7324, 0.0816, 4.29, 0.7663],
-                  std=[0.1975, 0.4383, 13.1661, 2.118])
+        Normalize(mean=[0.7518, 0.0341, 11.1675, 1.2187],
+                  std=[0.1988, 0.3581, 11.8194, 2.1971])
     ])
     
     validation_transform = transforms.Compose([
         ToTensor(),
-        Normalize(mean=[0.7324, 0.0816, 4.29, 0.7663],
-                  std=[0.1975, 0.4383, 13.1661, 2.118])
+        Normalize(mean=[0.7518, 0.0341, 11.1675, 1.2187],
+                  std=[0.1988, 0.3581, 11.8194, 2.1971])
     ])
 
     trainset = NexradDataset(root='/home/ylk/dataloader/train/', transform=train_transform)
