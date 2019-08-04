@@ -3,7 +3,7 @@
 Training script for NEXRAD with dynamic learing rate
 Training set: 100,000 Validation set: 7,500 Test set: 7,500
 Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2019
-Last Update: 02/25/2019
+Last Update: 08/04/2019
 '''
 # load libs
 from __future__ import print_function
@@ -163,10 +163,10 @@ def main():
                   std=[0.1988, 0.3581, 11.8194, 2.1971])
     ])
 
-    trainset = NexradDataset(root='/home/ylk/dataloader/train/', transform=train_transform)
+    trainset = NexradDataset(root='/raid/ylk/dataloader/train/', transform=train_transform)
     train_loader = DataLoader(trainset, batch_size=args.batch_size, shuffle=True, **kwargs)
 
-    validationset = NexradDataset(root='/home/ylk/dataloader/validation/', transform=validation_transform)
+    validationset = NexradDataset(root='/raid/ylk/dataloader/validation/', transform=validation_transform)
     validation_loader = DataLoader(validationset, batch_size=args.validation_batch_size, shuffle=False, **kwargs)
 
     eprint("==> Building model '{}'".format(args.arch))
