@@ -1,6 +1,5 @@
 script/.DS_Store
 .DS_Store
-*.ipynb
 .ipynb_checkpoints
 models/__pycache__
 datasets/__pycache__
