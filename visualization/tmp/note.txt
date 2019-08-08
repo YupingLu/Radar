@@ -1,0 +1,23 @@
+08/08/2019
+python test.py --arch resnet18 --path resnet18.pth.tar --gpu-id 3
+201811
+Test set: Average loss: 1.337   Accuracy: 43064/72204   59.642
+    IC: Test set: Average loss: 2.231   Accuracy: 8293/25626    32.362
+    DS: Test set: Average loss: 2.676   Accuracy: 2617/10942    23.917
+    RA: Test set: Average loss: 0.124   Accuracy: 16355/16965   96.404
+    BD: Test set: Average loss: 0.435   Accuracy: 15799/18671   84.618
+
+201812
+Test set: Average loss: 0.532   Accuracy: 40437/50370   80.280
+
+201901
+Test set: Average loss: 0.730   Accuracy: 54490/66718   81.672
+
+201902
+Test set: Average loss: 0.524   Accuracy: 61025/72663   83.984
+
+201903
+Test set: Average loss: 0.622   Accuracy: 46869/60302   77.724
+
+201904
+Test set: Average loss: 0.109   Accuracy: 75027/77843   96.382

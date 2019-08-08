@@ -3,7 +3,7 @@
 Scripts to viz the selected five variables and classification results.
 radar_echo_classification are visualized with filters.
 Copyright (c) Yuping Lu <yupinglu89@gmail.com>, 2019
-Last Update: 5/3/2019
+Last Update: 08/08/2019
 '''
 # load libs
 from __future__ import print_function
@@ -363,11 +363,11 @@ def main():
     args = parser.parse_args()
     
     # path to the raw data
-    n0h = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0HVNX_201801011620'
-    n0c = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0CVNX_201801011620'
-    n0k = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0KVNX_201801011620'
-    n0r = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS54_N0RVNX_201801011620'
-    n0x = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0XVNX_201801011620'
+    n0h = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0HVNX_201801071040'
+    n0c = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0CVNX_201801071040'
+    n0k = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0KVNX_201801071040'
+    n0r = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS54_N0RVNX_201801071040'
+    n0x = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0XVNX_201801071040'
 
     # Use CUDA
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_id
@@ -383,8 +383,8 @@ def main():
         
     transform = transforms.Compose([
         ToTensor(),
-        Normalize(mean=[0.7324, 0.0816, 4.29, 0.7663],
-                  std=[0.1975, 0.4383, 13.1661, 2.118])
+        Normalize(mean=[0.7518, 0.0341, 11.1675, 1.2187],
+                  std=[0.1988, 0.3581, 11.8194, 2.1971])
     ])
     
     results, labels = datacrop(n0h, n0c, n0k, n0r, n0x, transform, device, kwargs, args)
