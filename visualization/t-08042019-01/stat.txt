@@ -1,0 +1,174 @@
+08/10/2019
+resnet18
+python test.py --arch resnet18 --path resnet18.pth.tar --gpu-id 3
+201811
+Test set: Average loss: 1.315   Accuracy: 41872/72204   57.991
+    IC: Test set: Average loss: 2.423   Accuracy: 6184/25626    24.132
+    DS: Test set: Average loss: 2.277   Accuracy: 2902/10942    26.522
+    RA: Test set: Average loss: 0.107   Accuracy: 16443/16965   96.923
+    BD: Test set: Average loss: 0.335   Accuracy: 16343/18671   87.531
+
+201812
+Test set: Average loss: 0.555   Accuracy: 39692/50370   78.801
+    IC: Test set: Average loss: 1.247   Accuracy: 6333/12777    49.566
+    DS: Test set: Average loss: 1.451   Accuracy: 1839/4144     44.377
+    RA: Test set: Average loss: 0.034   Accuracy: 27958/28043   99.697
+    BD: Test set: Average loss: 0.947   Accuracy: 3562/5406     65.890
+
+201901
+Test set: Average loss: 0.741   Accuracy: 54438/66718   81.594
+    IC: Test set: Average loss: 2.608   Accuracy: 2893/7391     39.142
+    DS: Test set: Average loss: 3.210   Accuracy: 1433/7596     18.865
+    RA: Test set: Average loss: 0.057   Accuracy: 47829/48363   98.896
+    BD: Test set: Average loss: 0.869   Accuracy: 2283/3368     67.785
+
+201902
+Test set: Average loss: 0.469   Accuracy: 61271/72663   84.322
+    IC: Test set: Average loss: 1.594   Accuracy: 5720/12227    46.782
+    DS: Test set: Average loss: 1.567   Accuracy: 2503/6302     39.718
+    RA: Test set: Average loss: 0.042   Accuracy: 51038/51169   99.744
+    BD: Test set: Average loss: 0.854   Accuracy: 2010/2965     67.791
+
+201903
+Test set: Average loss: 0.569   Accuracy: 47722/60302   79.138
+    IC: Test set: Average loss: 1.473   Accuracy: 6282/13085    48.009
+    DS: Test set: Average loss: 1.450   Accuracy: 1897/4595     41.284
+    RA: Test set: Average loss: 0.081   Accuracy: 28079/28736   97.714
+    BD: Test set: Average loss: 0.438   Accuracy: 11464/13886   82.558
+
+201904
+Test set: Average loss: 0.077   Accuracy: 75721/77843   97.274
+    IC: Test set: Average loss: 1.602   Accuracy: 35/74 47.297
+    DS: Test set: Average loss: 1.330   Accuracy: 267/642       41.589
+    RA: Test set: Average loss: 0.051   Accuracy: 31053/31467   98.684
+    BD: Test set: Average loss: 0.075   Accuracy: 44366/45660   97.166
+
+201905
+Test set: Average loss: 0.054   Accuracy: 109030/111265 97.991
+    IC: 
+    DS: Test set: Average loss: 2.208   Accuracy: 0/4   0.000
+    RA: Test set: Average loss: 0.068   Accuracy: 28885/29584   97.637
+    BD: Test set: Average loss: 0.049   Accuracy: 80145/81677   98.124
+
+201906
+Test set: Average loss: 0.070   Accuracy: 103166/106101 97.234
+    IC: 
+    DS:   
+    RA: Test set: Average loss: 0.094   Accuracy: 28523/29573   96.449
+    BD: Test set: Average loss: 0.060   Accuracy: 74643/76528   97.537
+
+201907
+Test set: Average loss: 0.032   Accuracy: 48813/49373   98.866
+    IC: 
+    DS:   
+    RA: Test set: Average loss: 0.135   Accuracy: 4627/4890     94.622
+    BD: Test set: Average loss: 0.021   Accuracy: 44186/44483   99.332
+
+
+
+
+resnet101
+python test.py --arch resnet101 --path resnet101.pth.tar --gpu-id 3
+201811
+Test set: Average loss: 1.327   Accuracy: 42423/72204   58.754
+    IC: Test set: Average loss: 2.396   Accuracy: 6588/25626    25.708
+    DS: Test set: Average loss: 2.180   Accuracy: 3960/10942    36.191
+    RA: Test set: Average loss: 0.121   Accuracy: 16318/16965   96.186
+    BD: Test set: Average loss: 0.462   Accuracy: 15557/18671   83.322
+
+201812
+Test set: Average loss: 0.620   Accuracy: 38855/50370   77.139
+    IC: Test set: Average loss: 1.384   Accuracy: 5632/12777    44.079
+    DS: Test set: Average loss: 1.232   Accuracy: 2335/4144     56.347
+    RA: Test set: Average loss: 0.037   Accuracy: 27902/28043   99.497
+    BD: Test set: Average loss: 1.393   Accuracy: 2986/5406     55.235
+
+201901
+Test set: Average loss: 0.763   Accuracy: 54225/66718   81.275
+    IC: Test set: Average loss: 2.688   Accuracy: 2694/7391     36.450
+    DS: Test set: Average loss: 3.341   Accuracy: 1442/7596     18.984
+    RA: Test set: Average loss: 0.052   Accuracy: 47813/48363   98.863
+    BD: Test set: Average loss: 0.900   Accuracy: 2276/3368     67.577
+
+201902
+Test set: Average loss: 0.504   Accuracy: 60586/72663   83.379
+    IC: Test set: Average loss: 1.780   Accuracy: 4922/12227    40.255
+    DS: Test set: Average loss: 1.512   Accuracy: 2956/6302     46.906
+    RA: Test set: Average loss: 0.040   Accuracy: 50950/51169   99.572
+    BD: Test set: Average loss: 1.107   Accuracy: 1758/2965     59.292
+
+201903
+Test set: Average loss: 0.634   Accuracy: 46388/60302   76.926
+    IC: Test set: Average loss: 1.579   Accuracy: 5763/13085    44.043
+    DS: Test set: Average loss: 1.326   Accuracy: 2274/4595     49.489
+    RA: Test set: Average loss: 0.089   Accuracy: 27926/28736   97.181
+    BD: Test set: Average loss: 0.644   Accuracy: 10425/13886   75.076
+
+201904
+Test set: Average loss: 0.090   Accuracy: 75515/77843   97.009
+    IC: Test set: Average loss: 1.244   Accuracy: 40/74 54.054
+    DS: Test set: Average loss: 1.139   Accuracy: 335/642       52.181 
+    RA: Test set: Average loss: 0.055   Accuracy: 31016/31467   98.567
+    BD: Test set: Average loss: 0.098   Accuracy: 44124/45660   96.636
+
+201905
+Test set: Average loss: 0.060   Accuracy: 109034/111265 97.995
+    IC: 
+    DS: Test set: Average loss: 2.664   Accuracy: 0/4   0.000
+    RA: Test set: Average loss: 0.075   Accuracy: 28861/29584   97.556
+    BD: Test set: Average loss: 0.055   Accuracy: 80173/81677   98.159
+
+201906
+Test set: Average loss: 0.076   Accuracy: 102945/106101 97.025
+    IC: 
+    DS:   
+    RA: Test set: Average loss: 0.101   Accuracy: 28429/29573   96.132
+    BD: Test set: Average loss: 0.066   Accuracy: 74516/76528   97.371
+
+201907
+Test set: Average loss: 0.035   Accuracy: 48789/49373   98.817
+    IC: 
+    DS:   
+    RA: Test set: Average loss: 0.130   Accuracy: 4636/4890     94.806
+    BD: Test set: Average loss: 0.025   Accuracy: 44153/44483   99.258
+
+
+Test accuracy
+resnet18
+Test set: Average loss: 0.180   Accuracy: 241173/257998 93.479
+
+resnet101
+Test set: Average loss: 0.173   Accuracy: 241838/257998 93.736
+
+train:
+    IC: 103093
+    DS: 94286
+    RA: 1029089
+    BD: 837399
+validation:
+    IC: 12887
+    DS: 11787
+    RA: 128636
+    BD: 104674
+test:
+    IC: 12890
+    DS: 11789
+    RA: 128640
+    BD: 104679
+
+data time span:
+2015-01-01 to 2018-10-01 for training
+2018-11-01 to 2019-07-31 for future model tests
+
+python test_NEXRAD_filter.py --arch resnet18 --path resnet18.pth.tar --gpu-id 3
+
+
+python test_NEXRAD_filter.py --arch resnet101 --path resnet101.pth.tar --gpu-id 3
+
+
+Raw files used to viz variables:
+    n0h = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0HVNX_201801071040'
+    n0c = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0CVNX_201801071040'
+    n0k = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0KVNX_201801071040'
+    n0r = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS54_N0RVNX_201801071040'
+    n0x = '/home/ylk/nexrad/test_nexrad/processed/KOUN_SDUS84_N0XVNX_201801071040'
