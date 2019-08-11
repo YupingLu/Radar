@@ -4,4 +4,5 @@ The NEXRAD Level III data used in this project are from Vance AFB, OK. Four cate
 
 Preprocessing scripts are in script folder.
 
-More to be added here.
+A detailed description can be found here. 
+https://github.com/YupingLu/Radar/blob/master/notebook/nexrad_notes.ipynb
