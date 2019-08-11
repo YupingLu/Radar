@@ -354,8 +354,8 @@ def main():
     parser.add_argument('--gpu-id', type=str, default='3', metavar='N',
                         help='id(s) for CUDA_VISIBLE_DEVICES (default: 3)')
     # Miscs
-    parser.add_argument('--seed', type=int, default=20190225, metavar='S',
-                        help='random seed (default: 20190225)')
+    parser.add_argument('--seed', type=int, default=20190801, metavar='S',
+                        help='random seed (default: 20190801)')
     # Path to saved models
     parser.add_argument('--path', type=str, default='checkpoint/resnet18.pth.tar', metavar='PATH',
                         help='path to save models (default: checkpoint/resnet18.pth.tar)')
