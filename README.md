@@ -6,3 +6,7 @@ Preprocessing scripts are in script folder.
 
 A detailed description can be found here. 
 https://github.com/YupingLu/Radar/blob/master/notebook/nexrad_notes.ipynb
+
+Reference Paper
+---------------
+Y. Lu and J. Kumar, "Convolutional Neural Networks for Hydrometeor Classification using Dual Polarization Doppler Radars," 2019 International Conference on Data Mining Workshops (ICDMW), Beijing, China, 2019, pp. 288-295, doi: 10.1109/ICDMW.2019.00050.
